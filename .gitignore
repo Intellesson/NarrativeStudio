@@ -1,0 +1,10 @@
+# Local scratch - never publish
+*.pkf
+assets/peaks/
+assets/fingerpint test aud.wav
+assets/fingerprint test rea.wav
+
+# OS noise
+Thumbs.db
+desktop.ini
+.DS_Store

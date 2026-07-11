@@ -1,0 +1,282 @@
+/* Workflow page: animated mini-app demos. Each .demo-window is a tiny faked
+   Audiohook studio (palette + parts lifted from the real studio.css), driven
+   by demo.js adding/removing classes on a loop. */
+
+/* -- page layout: copy beside demo, alternating sides -- */
+.wf-section .wrap {
+  display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 3rem; align-items: center;
+}
+.wf-section.flip .wf-copy { order: 2; }
+.wf-copy h2 { margin: 0 0 0.6rem; font-size: 1.8rem; letter-spacing: -0.01em; }
+.wf-copy p { margin: 0; color: var(--muted); font-size: 1.02rem; }
+@media (max-width: 860px) {
+  .wf-section .wrap { grid-template-columns: 1fr; gap: 1.6rem; }
+  .wf-section.flip .wf-copy { order: 0; }
+}
+
+/* -- demo character colours (shared across scenes so the cast reads as one story) -- */
+.c-narr { --c: #8f93a2; }
+.c-mira { --c: #e0a63f; }
+.c-fox  { --c: #5fa777; }
+
+/* -- the mini app window -- */
+.demo-window {
+  background: #17171b; border: 1px solid var(--line); border-radius: 12px;
+  overflow: hidden; box-shadow: 0 18px 44px rgba(0,0,0,0.45);
+  font-size: 11px; line-height: 1.45; user-select: none; pointer-events: none;
+}
+/* reset helper: demo.js adds this for one frame so loop restarts don't animate backwards */
+.demo-window.dw-reset, .demo-window.dw-reset * { transition: none !important; animation: none !important; }
+
+.dw-bar {
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.75rem;
+  background: #0f0f12; border-bottom: 1px solid var(--line);
+}
+.dw-crumb { color: var(--muted); font-size: 10px; }
+
+.dw-tabs { display: flex; gap: 3px; padding: 0.45rem 0.75rem 0; border-bottom: 1px solid var(--line); }
+.dw-tab {
+  padding: 0.22rem 0.65rem; font-size: 10px; font-weight: 600; color: var(--muted);
+  background: var(--panel-2); border: 1px solid var(--line); border-bottom: none;
+  border-radius: 5px 5px 0 0; margin-bottom: -1px;
+}
+.dw-tab.active { color: var(--text); background: var(--panel); border-bottom: 1px solid var(--panel); }
+
+/* Fixed height: internal animations (collapsing drop zones, splitting rows) must
+   never resize the window, or the page layout shifts around it. Overflowing
+   content is clipped instead - hidden rows can wait below the fold. */
+.dw-body { position: relative; padding: 0.8rem; background: var(--panel); height: 252px; overflow: hidden; }
+/* The ACX scene stacks three take strips - it gets a taller (still fixed) body. */
+.demo-window[data-demo="levels"] .dw-body { height: 316px; }
+
+/* -- shared row (mini sentence-row) -- */
+.dw-rows { list-style: none; margin: 0.55rem 0 0; padding: 0; }
+.dw-rows li { margin-bottom: 0.35rem; }
+.dw-row {
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.55rem;
+  border: 1px solid var(--line); border-left: 3px solid transparent; border-radius: 5px;
+  background: var(--panel-2);
+  transition: background .35s ease, border-color .35s ease;
+}
+.dw-row[class*="c-"] { --rc: var(--c); }
+.dw-rows.striped .dw-row, .dw-row.assigned { border-left-color: var(--rc, transparent); }
+.dw-n { flex: none; width: 0.9em; color: var(--muted); font-weight: 600; font-size: 9.5px; }
+.dw-text { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Quoted dialogue takes its speaker's colour (falls back to the generic dusty
+   rose only while no character is assigned, e.g. right after import). */
+.dw-text .dlg { color: var(--dialogue); }
+.dw-row[class*="c-"] .dw-text .dlg { color: var(--c); }
+
+/* status dot + record/play buttons (mini versions of the app's) */
+.dw-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--line); transition: background .3s ease; }
+.dw-row.done .dw-dot { background: var(--accent-2); }
+.dw-rec {
+  flex: none; width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 8px;
+  border: 1px solid var(--line); background: var(--panel); color: var(--text);
+  transition: background .3s ease, border-color .3s ease;
+}
+.dw-row.ready { background: rgba(217, 155, 63, 0.15); border-color: #d99b3f; border-left-color: var(--rc, #d99b3f); }
+.dw-row.ready .dw-rec { background: #d99b3f; border-color: #d99b3f; color: #fff; animation: dw-pulse 1.1s infinite; }
+.dw-row.recording { background: rgba(224, 85, 107, 0.12); border-color: var(--danger); border-left-color: var(--rc, var(--danger)); }
+.dw-row.recording .dw-rec { background: var(--danger); border-color: var(--danger); color: #fff; }
+@keyframes dw-pulse { 50% { opacity: 0.45; } }
+
+/* live waveform inside a recording row */
+.dw-wave { display: none; align-items: center; gap: 2px; height: 15px; flex: none; }
+.dw-wave i { width: 3px; border-radius: 2px; background: currentColor; height: 30%; }
+.dw-wave i:nth-child(1) { height: 35%; } .dw-wave i:nth-child(2) { height: 70%; }
+.dw-wave i:nth-child(3) { height: 45%; } .dw-wave i:nth-child(4) { height: 90%; }
+.dw-wave i:nth-child(5) { height: 55%; } .dw-wave i:nth-child(6) { height: 75%; }
+.dw-wave i:nth-child(7) { height: 40%; } .dw-wave i:nth-child(8) { height: 60%; }
+.dw-row.recording .dw-wave { display: flex; color: var(--danger); }
+.dw-row.recording .dw-wave i { animation: dw-wob 0.5s ease-in-out infinite alternate; }
+.dw-wave i:nth-child(2n) { animation-delay: 0.12s; }
+.dw-wave i:nth-child(3n) { animation-delay: 0.22s; }
+@keyframes dw-wob { from { transform: scaleY(0.35); } to { transform: scaleY(1.5); } }
+.dw-row.done .dw-wave { display: flex; color: var(--accent-2); }
+
+/* mini buttons */
+.dw-btnbar {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 9px; font-size: 10px; font-weight: 600;
+  border: 1px solid var(--line); border-radius: 4px;
+  background: var(--panel-2); color: var(--text);
+  transition: background .25s ease, border-color .25s ease;
+}
+.dw-btnbar.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.dw-btnbar.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.dw-btnbar.press { animation: dw-press 0.4s ease; }
+@keyframes dw-press {
+  30% { transform: scale(0.92); background: var(--accent); border-color: var(--accent); color: #fff; }
+}
+.dw-btnbar.pulse { animation: dw-bpulse 0.8s ease 2; }
+@keyframes dw-bpulse { 50% { transform: scale(1.06); box-shadow: 0 0 12px rgba(214, 40, 57, 0.5); } }
+
+/* speaker box in a row: "speaker…" until assigned */
+.dw-spk {
+  flex: none; max-width: 5.5rem; padding: 1px 7px; font-size: 9.5px;
+  border: 1px solid var(--line); border-radius: 4px; background: var(--panel);
+  white-space: nowrap; overflow: hidden;
+}
+.dw-spk .v { display: none; }
+.dw-spk .u { color: var(--muted); font-style: italic; }
+.dw-row.assigned .dw-spk .u { display: none; }
+.dw-row.assigned .dw-spk .v { display: inline; }
+
+/* ============ scene 1: import ============ */
+.dw-file {
+  position: absolute; left: 50%; top: -30px; transform: translateX(-50%);
+  z-index: 3; opacity: 0; padding: 3px 10px;
+  border: 1px solid var(--line); border-radius: 5px; background: #0f0f12;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+  transition: top .6s cubic-bezier(.4,.9,.4,1), opacity .45s ease;
+}
+.dw-file.in { opacity: 1; top: 10px; }
+.dw-file.drop { top: 62px; }
+.dw-file.away { opacity: 0; }
+.dw-drop {
+  position: relative; border: 1px dashed var(--line); border-radius: 8px;
+  max-height: 150px; min-height: 116px; padding: 0.7rem 0.85rem;
+  display: flex; flex-direction: column; justify-content: center;
+  transition: max-height .5s ease, min-height .5s ease, opacity .4s ease,
+              padding .5s ease, border-width .5s ease, margin .5s ease;
+}
+.dw-hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: var(--muted); transition: opacity .35s ease; }
+.dw-drop.filled .dw-hint { opacity: 0; }
+.dw-drop.gone { opacity: 0; max-height: 0; min-height: 0; padding-top: 0; padding-bottom: 0; border-width: 0; overflow: hidden; }
+.dw-skel { display: flex; flex-direction: column; gap: 6px; }
+.dw-skel i { height: 6px; border-radius: 3px; background: #2e2e36; opacity: 0; transition: opacity .4s ease; }
+.dw-skel.in i { opacity: 1; }
+.dw-skel.in i:nth-child(2) { transition-delay: .1s; } .dw-skel.in i:nth-child(3) { transition-delay: .2s; }
+.dw-skel.in i:nth-child(4) { transition-delay: .3s; } .dw-skel.in i:nth-child(5) { transition-delay: .4s; }
+.dw-buildrow { display: flex; justify-content: flex-end; margin-top: 0.55rem; }
+/* rows slide in one by one after the build */
+.dw-rows li { opacity: 0; transform: translateY(8px); transition: opacity .4s ease, transform .4s ease; }
+.dw-rows.rows-in li { opacity: 1; transform: none; }
+.dw-rows.rows-in li:nth-child(2) { transition-delay: .14s; }
+.dw-rows.rows-in li:nth-child(3) { transition-delay: .28s; }
+.dw-rows.rows-in li:nth-child(4) { transition-delay: .42s; }
+/* scenes 2-5 show their rows immediately */
+.dw-rows.static li { opacity: 1; transform: none; transition: none; }
+
+/* ============ scene 2: characters ============ */
+.dw-roster-label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem; }
+.dw-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.7rem; min-height: 22px; }
+.dw-chip {
+  display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2);
+  opacity: 0; transform: scale(0.6);
+  transition: opacity .35s ease, transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+.dw-chip::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--c, var(--line)); }
+.dw-chip i { font-style: normal; color: var(--muted); font-size: 9px; }
+.dw-chip.pop { opacity: 1; transform: scale(1); }
+
+/* ============ scene 4: separate dialogue ============ */
+/* Rows in this scene expand/collapse: the combined line folds away and the two
+   split halves (speech / narration) grow in where it stood. */
+.dw-rows.sep li {
+  opacity: 1; transform: none; max-height: 44px; overflow: hidden;
+  transition: max-height .45s ease, opacity .4s ease, margin .45s ease;
+}
+.dw-rows.sep li.sp-new { max-height: 0; opacity: 0; margin: 0; }
+.dw-rows.sep li.sp-new.in { max-height: 44px; opacity: 1; margin-bottom: 0.35rem; }
+.dw-rows.sep li.sp-old.out { max-height: 0; opacity: 0; margin: 0; }
+
+/* ============ scene 5: dialogue studio ============ */
+.dw-toolbar { display: flex; gap: 0.4rem; margin-bottom: 0.55rem; }
+.dw-fx {
+  flex: none; display: inline-flex; align-items: center; gap: 3px;
+  padding: 1px 7px; font-size: 9px; border-radius: 999px;
+  border: 1px solid var(--accent); color: var(--text); background: rgba(214, 40, 57, 0.12);
+  opacity: 0; transform: translateX(6px); transition: opacity .35s ease, transform .35s ease;
+}
+.dw-row.fx-in .dw-fx { opacity: 1; transform: none; }
+.dw-fx .ok { display: none; color: var(--accent-2); font-weight: 700; }
+.dw-row.done .dw-fx .ok { display: inline; }
+.dw-sheen {
+  position: absolute; inset: 0; pointer-events: none; transform: translateX(-110%);
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.16) 50%, transparent 70%);
+}
+.dw-row.shimmer .dw-sheen { animation: dw-sheen 1s ease forwards; }
+@keyframes dw-sheen { to { transform: translateX(110%); } }
+
+/* ============ scene 6: ACX levels ============ */
+.dw-take {
+  display: flex; align-items: center; gap: 0.65rem;
+  border: 1px solid var(--line); border-radius: 6px; background: #131317;
+  padding: 0.4rem 0.6rem; margin-bottom: 0.45rem;
+}
+.dw-tk-wave { display: flex; align-items: center; gap: 2px; height: 34px; flex: 1; min-width: 0; transition: transform .5s ease; }
+/* the re-recorded take comes back tamer: same bars, squashed and green */
+.dw-take.retake .dw-tk-wave { transform: scaleY(0.62); }
+.dw-tk-wave i {
+  flex: 1; height: var(--h, 40%); border-radius: 1px; background: var(--accent-2);
+  transform: scaleY(0); transform-origin: center;
+  transition: transform .45s ease calc(var(--i, 0) * 28ms), background .35s ease;
+}
+.dw-take.draw .dw-tk-wave i { transform: scaleY(1); }
+/* the failing take: red trace with orange offending segments */
+.dw-take.bad .dw-tk-wave i { background: var(--danger); }
+.dw-take.bad .dw-tk-wave i.hot { background: #e08f3f; }
+.dw-take.bad.flag .dw-tk-wave i.hot { animation: dw-hot 0.7s ease-in-out infinite; }
+@keyframes dw-hot { 50% { opacity: 0.35; } }
+/* one-click repair: the whole trace settles back to green */
+.dw-take.bad.fixed .dw-tk-wave i,
+.dw-take.bad.fixed .dw-tk-wave i.hot { background: var(--accent-2); animation: none; }
+.dw-tk-info { flex: none; width: 122px; display: flex; flex-direction: column; gap: 3px; }
+.dw-tk-label { font-size: 8px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
+.dw-verdict { font-size: 10px; font-weight: 700; opacity: 0; transition: opacity .35s ease; }
+.dw-verdict.show { opacity: 1; }
+.dw-verdict em { display: block; font-style: normal; font-weight: 400; font-size: 8.5px; color: var(--muted); }
+.dw-verdict em.warn { color: #e08f3f; }
+.dw-verdict.v-ok, .dw-verdict.v-fixed { color: var(--accent-2); }
+.dw-verdict.v-bad { color: var(--danger); }
+.dw-verdict.v-fixed { display: none; }
+.dw-take.fixed .dw-verdict.v-bad { display: none; }
+.dw-take.fixed .dw-verdict.v-fixed { display: block; opacity: 1; }
+.dw-take .dw-btnbar { align-self: flex-start; }
+
+/* ============ scene 7: compile ============ */
+.dw-ruler {
+  height: 13px; margin-bottom: 2px; border-bottom: 1px solid var(--line);
+  background: repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 44px);
+  opacity: 0.7;
+}
+.dw-lane {
+  position: relative; height: 70px; margin-bottom: 0.65rem; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 6px; background: #131317;
+}
+.dw-clip {
+  position: absolute; top: 9px; height: 52px; left: var(--x); width: var(--w);
+  box-sizing: border-box; padding: 3px 5px; font-size: 9px; font-weight: 600;
+  color: var(--text); text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  background: color-mix(in srgb, var(--c) 30%, var(--panel));
+  border: 1px solid var(--c); border-radius: 4px;
+  opacity: 0; transform: translateY(-14px);
+  transition: opacity .35s ease, transform .4s ease;
+}
+/* faint waveform texture inside each clip */
+.dw-clip::after {
+  content: ''; position: absolute; left: 4px; right: 4px; top: 55%; height: 34%;
+  transform: translateY(-50%);
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,0.22) 0 2px, transparent 2px 5px);
+  border-radius: 2px; opacity: 0.5;
+}
+.dw-clip.in { opacity: 1; transform: none; }
+.dw-playhead {
+  position: absolute; top: 0; bottom: 0; left: 1.5%; width: 1px;
+  background: var(--danger); box-shadow: 0 0 6px rgba(255, 84, 112, 0.8);
+  transition: left 2.5s linear;
+}
+.dw-playhead.sweep { left: 97.5%; }
+.dw-export { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
+.dw-acx {
+  margin-left: auto; padding: 1px 8px; font-size: 9.5px; border-radius: 999px;
+  border: 1px solid var(--line); color: var(--muted);
+  opacity: 0; transition: opacity .4s ease, border-color .4s ease, color .4s ease;
+}
+.dw-acx.pass { opacity: 1; color: var(--accent-2); border-color: var(--accent-2); }

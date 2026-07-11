@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workflow — Audiohook</title>
+  <meta name="description" content="How a manuscript becomes a finished recording in Audiohook: import, characters, line-by-line recording, Dialogue Studio, and compile.">
+  <meta property="og:title" content="Workflow — Audiohook">
+  <meta property="og:description" content="How a manuscript becomes a finished recording in Audiohook: import, characters, line-by-line recording, Dialogue Studio, and compile.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+
+  <!-- top bar: injected by header.js (single source of truth for all pages) -->
+  <script src="header.js"></script>
+
+  <a id="top"></a>
+
+  <!-- hero -->
+  <section class="hero wf-hero">
+    <div class="wrap">
+      <div class="sts-hero">
+        <h1>Workflow</h1>
+        <p class="hero-lede">Our tools aim to take your document to a finished, quality audio product via the most seamless workflow for the task.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 · import -->
+  <section class="section wf-section" id="import">
+    <div class="wrap">
+      <div class="wf-copy">
+        <h2>Drop in your manuscript.</h2>
+        <p>Import a .docx, .epub, .pdf or pasted text. Audiohook splits it into chapters, then into individual sentences - the line-by-line surface everything else is built on.</p>
+      </div>
+      <div class="demo-window" data-demo="import" aria-hidden="true">
+        <div class="dw-bar"><span class="dw-crumb">The Fox &amp; the Henhouse · Chapter 1</span></div>
+        <div class="dw-tabs"><span class="dw-tab active">Overview</span><span class="dw-tab">Recording</span><span class="dw-tab">Takes</span><span class="dw-tab">Compile</span></div>
+        <div class="dw-body">
+          <div class="dw-file">the-fox-and-the-henhouse.docx</div>
+          <div class="dw-drop">
+            <span class="dw-hint">Upload .docx / .txt — or paste your chapter</span>
+            <div class="dw-skel">
+              <i style="width:94%"></i><i style="width:88%"></i><i style="width:96%"></i>
+              <i style="width:82%"></i><i style="width:64%"></i>
+            </div>
+          </div>
+          <div class="dw-buildrow"><span class="dw-btnbar b-build">Build &amp; find characters</span></div>
+          <ol class="dw-rows">
+            <li><div class="dw-row"><b class="dw-n">1</b><span class="dw-text">The fox crept up to the henhouse door.</span><span class="dw-dot"></span></div></li>
+            <li><div class="dw-row"><b class="dw-n">2</b><span class="dw-text"><span class="dlg">“Who goes there?”</span> Mira whispered.</span><span class="dw-dot"></span></div></li>
+            <li><div class="dw-row"><b class="dw-n">3</b><span class="dw-text"><span class="dlg">“Only the wind,”</span> the fox replied.</span><span class="dw-dot"></span></div></li>
+            <li><div class="dw-row"><b class="dw-n">4</b><span class="dw-text">The moon slid behind a cloud.</span><span class="dw-dot"></span></div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · characters -->
+  <section class="section wf-section flip" id="characters">
+    <div class="wrap">
+      <div class="wf-copy">
+        <h2>Hook up your characters.</h2>
+        <p>Add speakers, or let Audiohook detect them from dialogue tags (beta). Every character can be assigned colour, aliases and director's notes, and every line wears its speaker's colour down its left edge.</p>
+      </div>
+      <div class="demo-window" data-demo="characters" aria-hidden="true">
+        <div class="dw-bar"><span class="dw-crumb">The Fox &amp; the Henhouse · Chapter 1</span></div>
+        <div class="dw-tabs"><span class="dw-tab active">Overview</span><span class="dw-tab">Recording</span><span class="dw-tab">Takes</span><span class="dw-tab">Compile</span></div>
+        <div class="dw-body">
+          <div class="dw-roster-label">Suggested characters</div>
+          <div class="dw-chips">
+            <span class="dw-chip ch-1 c-narr">Narrator</span>
+            <span class="dw-chip ch-2 c-mira">Mira <i>she</i></span>
+            <span class="dw-chip ch-3 c-fox">The Fox <i>he</i></span>
+          </div>
+          <ol class="dw-rows static">
+            <li><div class="dw-row r1 c-narr"><b class="dw-n">1</b><span class="dw-spk"><span class="u">speaker…</span><span class="v">Narrator</span></span><span class="dw-text">The fox crept up to the henhouse door.</span><span class="dw-dot"></span></div></li>
+            <li><div class="dw-row r2 c-mira"><b class="dw-n">2</b><span class="dw-spk"><span class="u">speaker…</span><span class="v">Mira</span></span><span class="dw-text"><span class="dlg">“Who goes there?”</span> Mira whispered.</span><span class="dw-dot"></span></div></li>
+            <li><div class="dw-row r3 c-fox"><b class="dw-n">3</b><span class="dw-spk"><span class="u">speaker…</span><span class="v">The Fox</span></span><span class="dw-text"><span class="dlg">“Only the wind,”</span> the fox replied.</span><span class="dw-dot"></span></div></li>
+            <li><div class="dw-row r4 c-narr"><b class="dw-n">4</b><span class="dw-spk"><span class="u">speaker…</span><span class="v">Narrator</span></span><span class="dw-text">The moon slid behind a cloud.</span><span class="dw-dot"></span></div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · separate dialogue -->
+  <section class="section wf-section" id="separate">
+    <div class="wrap">
+      <div class="wf-copy">
+        <h2>Separate the speech.</h2>
+        <p>One click splits each line at the quote marks so the spoken words can be processed to carry an effect or STS switch on their own, for an optional separation of the narrative voice.</p>
+      </div>
+      <div class="demo-window" data-demo="separate" aria-hidden="true">
+        <div class="dw-bar"><span class="dw-crumb">The Fox &amp; the Henhouse · Chapter 1</span></div>
+        <div class="dw-tabs"><span class="dw-tab">Overview</span><span class="dw-tab active">Recording</span><span class="dw-tab">Takes</span><span class="dw-tab">Compile</span></div>
+        <div class="dw-body">
+          <div class="dw-toolbar">
+            <span class="dw-btnbar b-ds">Dialogue Studio</span>
+            <span class="dw-btnbar b-sep">Separate dialogue</span>
+          </div>
+          <ol class="dw-rows sep striped">
+            <li><div class="dw-row c-narr"><b class="dw-n">1</b><span class="dw-text">The fox crept up to the henhouse door.</span><span class="dw-dot"></span></div></li>
+            <li class="sp-old old2"><div class="dw-row c-mira"><b class="dw-n">2</b><span class="dw-text"><span class="dlg">“Who goes there?”</span> Mira whispered.</span><span class="dw-dot"></span></div></li>
+            <li class="sp-new n2a"><div class="dw-row c-mira"><b class="dw-n">2</b><span class="dw-text"><span class="dlg">“Who goes there?”</span></span><span class="dw-dot"></span></div></li>
+            <li class="sp-new n2b"><div class="dw-row c-narr"><b class="dw-n">3</b><span class="dw-text">Mira whispered.</span><span class="dw-dot"></span></div></li>
+            <li class="sp-old old3"><div class="dw-row c-fox"><b class="dw-n">3</b><span class="dw-text"><span class="dlg">“Only the wind,”</span> the fox replied.</span><span class="dw-dot"></span></div></li>
+            <li class="sp-new n3a"><div class="dw-row c-fox"><b class="dw-n">4</b><span class="dw-text"><span class="dlg">“Only the wind,”</span></span><span class="dw-dot"></span></div></li>
+            <li class="sp-new n3b"><div class="dw-row c-narr"><b class="dw-n">5</b><span class="dw-text">the fox replied.</span><span class="dw-dot"></span></div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · record -->
+  <section class="section wf-section flip" id="record">
+    <div class="wrap">
+      <div class="wf-copy">
+        <h2>Record, line by line.</h2>
+        <p>Arm a line, speak, and roll straight to the next. Every take is processed in 32-bit float and saved to disk instantly as a lossless 24-bit WAV master, and auto-advance keeps you moving down the page.</p>
+      </div>
+      <div class="demo-window" data-demo="record" aria-hidden="true">
+        <div class="dw-bar"><span class="dw-crumb">The Fox &amp; the Henhouse · Chapter 1</span></div>
+        <div class="dw-tabs"><span class="dw-tab">Overview</span><span class="dw-tab active">Recording</span><span class="dw-tab">Takes</span><span class="dw-tab">Compile</span></div>
+        <div class="dw-body">
+          <ol class="dw-rows static striped">
+            <li><div class="dw-row r1 c-narr"><b class="dw-n">1</b><span class="dw-rec">⏺</span><span class="dw-text">The fox crept up to the henhouse door.</span><span class="dw-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="dw-dot"></span></div></li>
+            <li><div class="dw-row r2 c-mira"><b class="dw-n">2</b><span class="dw-rec">⏺</span><span class="dw-text"><span class="dlg">“Who goes there?”</span></span><span class="dw-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="dw-dot"></span></div></li>
+            <li><div class="dw-row r3 c-narr"><b class="dw-n">3</b><span class="dw-rec">⏺</span><span class="dw-text">Mira whispered.</span><span class="dw-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="dw-dot"></span></div></li>
+          </ol>
+          <div class="dw-buildrow" style="margin-top:0.7rem">
+            <span class="dw-btnbar dock-rec">⏺ Record</span>&nbsp;
+            <span class="dw-btnbar">⏹ Stop</span>&nbsp;
+            <span class="dw-btnbar">⏭ Next</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · dialogue studio -->
+  <section class="section wf-section" id="dialogue-studio">
+    <div class="wrap">
+      <div class="wf-copy">
+        <h2>Tune your dialogue.</h2>
+        <p>Give any spoken line custom/preset vocal effects for scenes that benefit from them. Or go further: speech-to-speech voice changing re-voices your performance as another character entirely (beta), keeping every beat of your performance while narration stays exactly as you recorded it.</p>
+      </div>
+      <div class="demo-window" data-demo="dialogue" aria-hidden="true">
+        <div class="dw-bar"><span class="dw-crumb">The Fox &amp; the Henhouse · Chapter 1</span></div>
+        <div class="dw-tabs"><span class="dw-tab">Overview</span><span class="dw-tab active">Recording</span><span class="dw-tab">Takes</span><span class="dw-tab">Compile</span></div>
+        <div class="dw-body">
+          <div class="dw-toolbar">
+            <span class="dw-btnbar b-ds">Dialogue Studio</span>
+            <span class="dw-btnbar b-gen">⟳ Generate</span>
+          </div>
+          <ol class="dw-rows static striped">
+            <li><div class="dw-row r1 c-narr done"><b class="dw-n">1</b><span class="dw-text">The fox crept up to the henhouse door.</span><span class="dw-dot"></span></div></li>
+            <li><div class="dw-row r2 c-mira"><b class="dw-n">2</b><span class="dw-text"><span class="dlg">“Who goes there?”</span></span><span class="dw-fx"> Echo <span class="ok">✓</span></span><span class="dw-dot"></span><span class="dw-sheen"></span></div></li>
+            <li><div class="dw-row r3 c-narr done"><b class="dw-n">3</b><span class="dw-text">Mira whispered.</span><span class="dw-dot"></span></div></li>
+            <li><div class="dw-row r4 c-fox"><b class="dw-n">4</b><span class="dw-text"><span class="dlg">“Only the wind,”</span></span><span class="dw-fx"> Voice swap <span class="ok">✓</span></span><span class="dw-dot"></span><span class="dw-sheen"></span></div></li>
+            <li><div class="dw-row r5 c-narr done"><b class="dw-n">5</b><span class="dw-text">the fox replied.</span><span class="dw-dot"></span></div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · ACX levels -->
+  <section class="section wf-section flip" id="levels">
+    <div class="wrap">
+      <div class="wf-copy">
+        <h2>Keep every take standardised to ACX compliance.</h2>
+        <p>Loudness, peaks and noise floor are measured against the Audiobook Creation Exchange band as you go, and offending segments light up right on the waveform to help you grease the right wheels in your next take. Clips that came close but didn't quite make the cut get a one-click repair, so only irreparable audio requires re-recording.</p>
+      </div>
+      <div class="demo-window" data-demo="levels" aria-hidden="true">
+        <div class="dw-bar"><span class="dw-crumb">The Fox &amp; the Henhouse · Chapter 1</span></div>
+        <div class="dw-tabs"><span class="dw-tab">Overview</span><span class="dw-tab active">Recording</span><span class="dw-tab">Takes</span><span class="dw-tab">Compile</span></div>
+        <div class="dw-body">
+          <div class="dw-toolbar">
+            <span class="dw-btnbar b-acx">ACX Levels</span>
+          </div>
+          <div class="dw-take t1">
+            <div class="dw-tk-wave"><i style="--h:32%;--i:0"></i><i style="--h:58%;--i:1"></i><i style="--h:72%;--i:2"></i><i style="--h:44%;--i:3"></i><i style="--h:86%;--i:4"></i><i style="--h:62%;--i:5"></i><i style="--h:38%;--i:6"></i><i style="--h:76%;--i:7"></i><i style="--h:52%;--i:8"></i><i style="--h:90%;--i:9"></i><i style="--h:66%;--i:10"></i><i style="--h:42%;--i:11"></i><i style="--h:80%;--i:12"></i><i style="--h:56%;--i:13"></i><i style="--h:70%;--i:14"></i><i style="--h:46%;--i:15"></i><i style="--h:62%;--i:16"></i><i style="--h:84%;--i:17"></i><i style="--h:50%;--i:18"></i><i style="--h:74%;--i:19"></i><i style="--h:40%;--i:20"></i><i style="--h:66%;--i:21"></i><i style="--h:54%;--i:22"></i><i style="--h:34%;--i:23"></i></div>
+            <div class="dw-tk-info">
+              <span class="dw-tk-label">Recorded take</span>
+              <span class="dw-verdict v-ok v1">✓ Take OK <em>−20.1 LUFS · peak −3.0 dB</em></span>
+            </div>
+          </div>
+          <div class="dw-take t2 bad">
+            <div class="dw-tk-wave"><i style="--h:40%;--i:0"></i><i style="--h:62%;--i:1"></i><i style="--h:50%;--i:2"></i><i style="--h:78%;--i:3"></i><i class="hot" style="--h:96%;--i:4"></i><i style="--h:58%;--i:5"></i><i style="--h:44%;--i:6"></i><i style="--h:70%;--i:7"></i><i style="--h:54%;--i:8"></i><i style="--h:66%;--i:9"></i><i style="--h:48%;--i:10"></i><i class="hot" style="--h:96%;--i:11"></i><i style="--h:60%;--i:12"></i><i style="--h:52%;--i:13"></i><i style="--h:74%;--i:14"></i><i style="--h:46%;--i:15"></i><i style="--h:68%;--i:16"></i><i style="--h:56%;--i:17"></i><i class="hot" style="--h:96%;--i:18"></i><i style="--h:64%;--i:19"></i><i style="--h:50%;--i:20"></i><i style="--h:72%;--i:21"></i><i style="--h:58%;--i:22"></i><i style="--h:42%;--i:23"></i></div>
+            <div class="dw-tk-info">
+              <span class="dw-tk-label">Recorded take</span>
+              <span class="dw-verdict v-bad v2">✗ Needs work <em>peak 0.0 dB · clipping</em></span>
+              <span class="dw-verdict v-fixed">✓ Take OK <em>repaired · peak −3.0 dB</em></span>
+              <span class="dw-btnbar b-fix">Repair</span>
+            </div>
+          </div>
+          <div class="dw-take t3 bad">
+            <div class="dw-tk-wave"><i class="hot" style="--h:94%;--i:0"></i><i style="--h:78%;--i:1"></i><i class="hot" style="--h:97%;--i:2"></i><i style="--h:66%;--i:3"></i><i class="hot" style="--h:95%;--i:4"></i><i style="--h:82%;--i:5"></i><i style="--h:70%;--i:6"></i><i class="hot" style="--h:96%;--i:7"></i><i style="--h:74%;--i:8"></i><i style="--h:88%;--i:9"></i><i class="hot" style="--h:97%;--i:10"></i><i style="--h:68%;--i:11"></i><i style="--h:84%;--i:12"></i><i class="hot" style="--h:95%;--i:13"></i><i style="--h:76%;--i:14"></i><i style="--h:90%;--i:15"></i><i style="--h:72%;--i:16"></i><i class="hot" style="--h:96%;--i:17"></i><i style="--h:80%;--i:18"></i><i style="--h:86%;--i:19"></i><i class="hot" style="--h:94%;--i:20"></i><i style="--h:70%;--i:21"></i><i style="--h:78%;--i:22"></i><i style="--h:64%;--i:23"></i></div>
+            <div class="dw-tk-info">
+              <span class="dw-tk-label">Recorded take</span>
+              <span class="dw-verdict v-bad v3">✗ Needs another take <em class="warn">⚠ Too far off to tweak - re-record</em></span>
+              <span class="dw-verdict v-fixed">✓ Take OK <em>new take · −20.4 LUFS</em></span>
+              <span class="dw-btnbar b-rerec">⏺ Re-record</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · compile -->
+  <section class="section wf-section" id="compile">
+    <div class="wrap">
+      <div class="wf-copy">
+        <h2>Compile the master.</h2>
+        <p>Sequence every take on the timeline, check loudness against the ACX band, and export a lossless WAV master or MP3/M4B for final delivery. Add music or sound effects for audio plays or other media. Or simply download every line separately for projects like video games.</p>
+      </div>
+      <div class="demo-window" data-demo="compile" aria-hidden="true">
+        <div class="dw-bar"><span class="dw-crumb">The Fox &amp; the Henhouse · Chapter 1</span></div>
+        <div class="dw-tabs"><span class="dw-tab">Overview</span><span class="dw-tab">Recording</span><span class="dw-tab">Takes</span><span class="dw-tab active">Compile</span></div>
+        <div class="dw-body">
+          <div class="dw-ruler"></div>
+          <div class="dw-lane">
+            <span class="dw-clip k1 c-narr" style="--x:1.5%; --w:20%">01</span>
+            <span class="dw-clip k2 c-mira" style="--x:23.5%; --w:13%">02</span>
+            <span class="dw-clip k3 c-fox" style="--x:38.5%; --w:15%">03</span>
+            <span class="dw-clip k4 c-narr" style="--x:55.5%; --w:17%">04</span>
+            <span class="dw-clip k5 c-mira" style="--x:74.5%; --w:14%">05</span>
+            <i class="dw-playhead"></i>
+          </div>
+          <div class="dw-export">
+            <span class="dw-btnbar primary b-acx">✓ ACX Check &amp; export</span>
+            <span class="dw-btnbar">Export master WAV</span>
+            <span class="dw-acx">−23.1 LUFS · pass</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <div>
+        <a class="logo" href="index.html" style="font-size:16px;">
+          <span><span class="lg-audio">AUDIO</span><span class="lg-hook">HOOK</span></span>
+        </a>
+        <div style="margin-top:0.4rem;">&copy; 2025–2026 Intellesson Software · AGPL-3.0</div>
+      </div>
+      <div class="foot-links">
+        <a href="workflow.html">Workflow</a>
+        <a href="speech-to-speech.html">Speech to Speech</a>
+        <a href="index.html#download">Download</a>
+        <a href="https://github.com/charlicorri/audiohook">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="demo.js" defer></script>
+</body>
+</html>

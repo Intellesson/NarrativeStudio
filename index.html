@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audiohook - Recordist Studio</title>
+  <meta name="description" content="Audiohook is a free, open-source recording studio that puts the manuscript first: import a script, record line by line, dress the dialogue, check ACX compliance, and compile audiobooks, radio plays and game voice-over.">
+  <meta property="og:title" content="Audiohook - Recordist Studio">
+  <meta property="og:description" content="The free, open-source recording studio that puts the manuscript first - for audiobooks, radio plays, video games and animated scripts.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="home">
+
+  <!-- top bar: injected by header.js (single source of truth for all pages) -->
+  <script src="header.js"></script>
+
+  <a id="top"></a>
+
+  <!-- hero -->
+  <section class="hero home-hero">
+    <img class="hero-photo" src="assets/images/ah_image1ext.jpg" alt="A narrator recording into a studio microphone, smiling">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1>Record with complete control.</h1>
+          <p class="hero-lede">Audiohook is the first audio recording software to prioritise narrative organisation.</p>
+          <p class="hero-sub">Designed for audiobooks, radio plays, video games, animated scripts, and similar projects that require highly categorised audio.</p>
+          <div class="hero-cta">
+            <a class="btn primary" href="#download">Download for Windows <span class="sz">· free</span></a>
+            <a class="btn ghost" href="workflow.html">See what it does</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- features -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Your new creative audio pipeline.</h2>
+        <p>Everything from a raw manuscript to a compiled master track, built for narrators and creators to focus their time on what matters.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h3>Import any manuscript</h3>
+          <p>Add your document to have it split into chapters/scenes, then into sentences to freely split and join into organised segments.</p>
+        </div>
+        <div class="card">
+          <h3>Characters &amp; dialogue</h3>
+          <p>Add speakers and auto-detect them from dialogue tags (beta). Organise your characters, add aliases, director's notes, and colours for easy identification during recording.</p>
+        </div>
+        <div class="card">
+          <h3>Line-by-line recording</h3>
+          <p>Narrate each sentence on a dedicated recording surface. Keep unlimited organised recordings to make sure you never lose that perfect take.</p>
+        </div>
+        <div class="card">
+          <h3>Dialogue Studio</h3>
+          <p>Apply audio effects presets per line, or assign optional third-party AI voices to characters for video games, animations, or radio plays to bring small projects to life.</p>
+        </div>
+        <div class="card">
+          <h3>ACX compliance check</h3>
+          <p>Measure each take against the ACX band with true BS.1770 integrated LUFS, re-record only what is required, and export standardised finals with confidence.</p>
+        </div>
+        <div class="card">
+          <h3>Compile the master</h3>
+          <p>Assemble every take into scenes. Audio is processed in 32-bit float and stays lossless 24-bit throughout, with WAV, FLAC, MP3 and M4B delivery options.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- listen & verify -->
+  <section class="section" id="listen">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Hear it. Then verify it.</h2>
+        <p>The same line, the same microphone, the same room - recorded through Adobe Audition and Audiohook. Download the original files to check the fingerprints through ffprobe, ExifTool or MediaInfo.</p>
+      </div>
+      <div class="listen-grid">
+        <div class="listen-card">
+          <div class="listen-app">Adobe Audition</div>
+          <div class="lp" data-src="assets/audioclips/beigehueAUDITION.wav">
+            <button class="lp-play" aria-label="Play Adobe Audition sample">▶</button>
+            <div class="lp-track"><div class="lp-fill"></div></div>
+            <span class="lp-time">–:––</span>
+          </div>
+          <div class="listen-meta"><span class="lm-key">ISFT</span> Adobe Audition 26.3 (Windows)</div>
+          <a class="listen-dl" href="assets/audioclips/beigehueAUDITION.wav" download>Download the untouched WAV →</a>
+        </div>
+        <div class="listen-card">
+          <div class="listen-app">Audiohook</div>
+          <div class="lp" data-src="assets/audioclips/beigehueAUDIOHOOK.wav">
+            <button class="lp-play" aria-label="Play Audiohook sample">▶</button>
+            <div class="lp-track"><div class="lp-fill"></div></div>
+            <span class="lp-time">–:––</span>
+          </div>
+          <div class="listen-meta"><span class="lm-key">ISFT</span> Audiohook 0.1.0 (Windows)</div>
+          <a class="listen-dl" href="assets/audioclips/beigehueAUDIOHOOK.wav" download>Download the untouched WAV →</a>
+        </div>
+      </div>
+
+      <div class="vs-panel">
+        <table class="vs-table">
+          <thead>
+            <tr>
+              <th>How the workflow compares</th>
+              <th>Audacity</th>
+              <th>Adobe Audition</th>
+              <th>REAPER</th>
+              <th class="vs-us">Audiohook</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Punch-and-roll recording</td><td>✓</td><td>✓</td><td>✓</td><td class="vs-us">✓</td></tr>
+            <tr><td>Manuscript as the interface</td><td>—</td><td>—</td><td>script it yourself</td><td class="vs-us">✓ built in</td></tr>
+            <tr><td>Character-aware dialogue</td><td>—</td><td>—</td><td>—</td><td class="vs-us">✓</td></tr>
+            <tr><td>Takes managed per line</td><td>—</td><td>—</td><td>✓ take lanes</td><td class="vs-us">✓ per segment takes</td></tr>
+            <tr><td>Per-clip effect chains</td><td>macros, destructive</td><td>✓ clip FX rack</td><td>✓ item FX</td><td class="vs-us">✓ Dialogue Studio</td></tr>
+            <tr><td>Audio restoration</td><td>✓ with plugins</td><td>✓ best-in-class</td><td>via plugins</td><td class="vs-us">✓ room tone + declick</td></tr>
+            <tr><td>External-editor round-trip</td><td>—</td><td>—</td><td>✓ per item</td><td class="vs-us">✓ saves return as takes</td></tr>
+            <tr><td>LUFS loudness tools</td><td>✓ built in</td><td>✓ Match Loudness</td><td>via SWS extension</td><td class="vs-us">✓ built in</td></tr>
+            <tr><td>Per-take ACX verdict + one-click repair</td><td>plugin, per file</td><td>—</td><td>—</td><td class="vs-us">✓</td></tr>
+            <tr><td>Separate-file batch export</td><td>✓ by labels</td><td>from markers</td><td>✓ region matrix</td><td class="vs-us">✓ zip · WAV/FLAC/MP3 + manifest</td></tr>
+            <tr><td>Caption (SRT) export</td><td>labels to .txt</td><td>via Premiere</td><td>community scripts</td><td class="vs-us">✓ line + word level</td></tr>
+            <tr><td>Scene video beside the timeline</td><td>—</td><td>✓ video track</td><td>✓ video window</td><td class="vs-us">✓ locked to playhead</td></tr>
+            <tr><td>Speech-to-speech voices (optional)</td><td>—</td><td>—</td><td>—</td><td class="vs-us">✓</td></tr>
+            <tr><td>Price</td><td>free · open source</td><td>subscription</td><td>$60 license</td><td class="vs-us">free · open source</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- open source -->
+  <section class="section" id="open-source">
+    <div class="wrap">
+      <div class="os-grid">
+        <div class="os-story">
+          <h2>Made for teaching. Destined for sharing.</h2>
+          <p>In language education, the demand for the teacher's voice is insatiable. Whether it's scripts to help kids win competitions, spoken books that help students learn to read, audio for listening tests, conversation examples, or anything on the ever-growing list, one thing never changes: the battle of quality vs. time investment.</p>
+          <p>And where is all the time sinking? Well, it's labelling, it's organising for compile, it's quality maintenance... it's anywhere and everywhere but creativity.</p>
+          <p>As a team of teachers and software developers, we've been aiming to solve this problem for a very long time. Starting as a basic line recorder where typed text can be recorded for export as named lines, our software has grown into something that could record more than just The Very Hungry Caterpillar. It became an exceptionally fast, multi-purpose workflow with a very high standard output, and we knew this was something that needed to be shared with everyone.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- download -->
+  <section class="section" id="download">
+    <div class="wrap">
+      <div class="download-panel">
+        <div class="download-top">
+          <div>
+            <h2>Download Audiohook</h2>
+            <p>A Windows desktop app. Free and open source under the AGPL-3.0. Download the installer, run it, and you are recording.</p>
+          </div>
+          <img class="dl-logo" src="assets/logo/AHfullogo.png" alt="" aria-hidden="true">
+          <div class="dl-actions">
+            <a class="btn primary" href="https://github.com/charlicorri/audiohook/releases/latest" id="dl-installer">Windows Installer (.exe) <span class="sz">· latest</span></a>
+            <a class="btn ghost" href="https://github.com/charlicorri/audiohook/releases">All releases</a>
+            <div class="dl-meta">Requires Windows 10 or 11 · <a href="https://github.com/charlicorri/audiohook">View source on GitHub</a></div>
+          </div>
+        </div>
+
+        <div class="req">
+          <div>
+            <h4>Operating system</h4>
+            <p>Windows 10 or 11 (64-bit)</p>
+          </div>
+          <div>
+            <h4>Microphone</h4>
+            <p>Any input device; native WASAPI capture built in</p>
+          </div>
+          <div>
+            <h4>Internet</h4>
+            <p>Offline with optional API extensions</p>
+          </div>
+          <div>
+            <h4>License</h4>
+            <p>AGPL-3.0 · free to use, modify and share</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <div>
+        <a class="logo" href="#top" style="font-size:16px;">
+          <span><span class="lg-audio">AUDIO</span><span class="lg-hook">HOOK</span></span>
+        </a>
+        <div style="margin-top:0.4rem;">&copy; 2025–2026 Intellesson Software · AGPL-3.0</div>
+      </div>
+      <div class="foot-links">
+        <a href="workflow.html">Workflow</a>
+        <a href="speech-to-speech.html">Speech to Speech</a>
+        <a href="#download">Download</a>
+        <a href="https://github.com/charlicorri/audiohook">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="listen.js" defer></script>
+</body>
+</html>
