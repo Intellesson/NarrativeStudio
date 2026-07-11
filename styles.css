@@ -566,6 +566,9 @@ pre.code { display: block; padding: 0.85rem 1rem; overflow-x: auto; white-space:
 @media (max-width: 600px) {
   .sts-card { flex-wrap: wrap; }
 }
+.sts-disclaimer {
+  margin: 1.4rem 0 0.8rem; font-size: 0.85rem; font-style: italic; color: var(--muted);
+}
 
 /* -- footer -- */
 .footer {
