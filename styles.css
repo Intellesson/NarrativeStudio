@@ -489,6 +489,8 @@ pre.code { display: block; padding: 0.85rem 1rem; overflow-x: auto; white-space:
 .sts-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 .sts-body { flex: 1; min-width: 0; }
 .sts-name { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.55rem; }
+.sts-from { font-weight: 400; font-size: 0.85rem; font-style: italic; color: var(--muted); margin-left: 0.45rem; }
+.sts-from::before { content: '- '; font-style: normal; }
 /* the comparison proper: two equal halves, human performance vs flat TTS */
 .sts-duel { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: stretch; }
 @media (max-width: 860px) { .sts-duel { grid-template-columns: 1fr; } }
