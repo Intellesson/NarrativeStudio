@@ -32,10 +32,12 @@
     var m = Math.floor(s / 60), r = Math.floor(s % 60);
     return m + ':' + String(r).padStart(2, '0');
   }
-  // slider 0..100 (100 = character voice) -> equal-power gain pair
+  // Compare-divider position 0..100. Like an image before/after slider: the
+  // ORIGINAL is revealed from the left (0 = all character voice, 100 = all
+  // original). Equal-power blend so loudness holds steady mid-drag.
   function mixGains(v) {
     var x = Math.max(0, Math.min(1, v / 100));
-    return { sts: Math.sin(x * Math.PI / 2), orig: Math.cos(x * Math.PI / 2) };
+    return { orig: Math.sin(x * Math.PI / 2), sts: Math.cos(x * Math.PI / 2) };
   }
 
   document.querySelectorAll('.sts-card').forEach(function (card) {
@@ -100,7 +102,10 @@
 
     stop.addEventListener('click', function () { current = null; morphStop(); });
 
+    var cmpr = card.querySelector('.cmpr');
     mix.addEventListener('input', function () {
+      // the divider + revealed panes always track the drag, playing or not
+      if (cmpr) cmpr.style.setProperty('--x', mix.value + '%');
       if (!m) return;
       var g = mixGains(Number(mix.value));
       var now = getCtx().currentTime;
@@ -110,12 +115,18 @@
     });
 
     // ---- flat TTS player ----
+    var tfill = card.querySelector('.tp-fill');
+    var ttime = card.querySelector('.tp-time');
+    var traf = 0;
     function ttsStop() {
+      if (traf) { cancelAnimationFrame(traf); traf = 0; }
       if (t) {
         var was = t; t = null;
         try { was.src.stop(); } catch (e) { /* already stopped */ }
       }
       setTtsBtns(false);
+      if (tfill) tfill.style.width = '0%';
+      if (ttime) ttime.textContent = '–:––';
     }
 
     tplay.addEventListener('click', function () {
@@ -127,13 +138,21 @@
         var c = getCtx();
         var src = c.createBufferSource(); src.buffer = buf;
         src.connect(c.destination);
-        src.start();
-        t = { src: src };
+        var t0 = c.currentTime + 0.03;
+        src.start(t0);
+        t = { src: src, t0: t0, dur: buf.duration };
         current = { stop: ttsStop };
         setTtsBtns(true);
         src.onended = function () {
           if (t && t.src === src) { current = null; ttsStop(); }
         };
+        (function tick() {
+          if (!t) return;
+          var el = Math.max(0, c.currentTime - t.t0);
+          if (tfill) tfill.style.width = Math.min(100, el / t.dur * 100) + '%';
+          if (ttime) ttime.textContent = fmt(el) + ' / ' + fmt(t.dur);
+          traf = requestAnimationFrame(tick);
+        })();
       }).catch(function (e) {
         console.error('sts tts:', e);
         if (my === token) setTtsBtns(false);

@@ -487,13 +487,29 @@ pre.code { display: block; padding: 0.85rem 1rem; overflow-x: auto; white-space:
   border: 2px dashed rgba(255,255,255,0.25);
 }
 .sts-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-.sts-main { flex: 1; min-width: 0; }
-.sts-name { font-weight: 700; font-size: 1.05rem; }
-.sts-quote {
-  margin: 0.15rem 0 0.65rem; color: var(--muted); font-size: 0.9rem; font-style: italic;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+.sts-body { flex: 1; min-width: 0; }
+.sts-name { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.55rem; }
+/* the comparison proper: two equal halves, human performance vs flat TTS */
+.sts-duel { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: stretch; }
+@media (max-width: 860px) { .sts-duel { grid-template-columns: 1fr; } }
+.sts-half {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 12px; padding: 0.65rem 0.85rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
 }
-.sts-morph { display: flex; align-items: center; gap: 0.6rem; }
+.sts-half-label {
+  font-size: 9.5px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted);
+}
+.sts-morph, .sts-ttsrow { display: flex; align-items: center; gap: 0.6rem; }
+.tp-track {
+  flex: 1; min-width: 60px; height: 7px; border-radius: 999px;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+  overflow: hidden;
+}
+.tp-fill { width: 0%; height: 100%; background: var(--muted); border-radius: 999px; }
+.tp-time { flex: none; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 5.6rem; text-align: right; }
 .sp-play, .sp-stop, .tp-play, .tp-stop {
   flex: none; width: 38px; height: 38px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center; font-size: 12px;
@@ -505,23 +521,50 @@ pre.code { display: block; padding: 0.85rem 1rem; overflow-x: auto; white-space:
 .sp-play:hover:not(:disabled), .tp-play:hover:not(:disabled) { border-color: var(--accent-2); color: var(--accent-2); }
 .sp-stop:hover:not(:disabled), .tp-stop:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
 .sp-play:disabled, .sp-stop:disabled, .tp-play:disabled, .tp-stop:disabled { opacity: 0.35; cursor: default; }
-.sts-slider { flex: 1; min-width: 0; display: flex; align-items: center; gap: 0.55rem; }
-.sl-label { flex: none; font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
-.sp-mix { flex: 1; min-width: 60px; accent-color: var(--accent); cursor: pointer; }
-.sp-time { flex: none; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 5.6rem; text-align: right; }
-.sts-tts {
-  flex: none; display: flex; flex-direction: column; align-items: center; gap: 0.45rem;
-  padding-left: 1.3rem; border-left: 1px solid rgba(255,255,255,0.1);
+/* The original/character blend styled as an image-compare tool: two labelled
+   panes split by a vertical divider with a circular grip. The invisible range
+   input on top does the actual dragging (and keyboard a11y); --x mirrors its
+   value and drives the clip-paths + divider position. */
+.cmpr {
+  position: relative; flex: 1; min-width: 120px; height: 38px;
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(0,0,0,0.25);
 }
-.sts-tts-label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.sts-tts-btns { display: flex; gap: 0.4rem; }
-@media (max-width: 720px) {
+.cmpr-pane {
+  position: absolute; inset: 0; display: flex; align-items: center;
+  pointer-events: none; font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.cmpr-orig {
+  justify-content: flex-start; padding-left: 0.75rem; color: var(--text);
+  background: rgba(255,255,255,0.09);
+  clip-path: inset(0 calc(100% - var(--x, 50%)) 0 0);
+}
+.cmpr-char {
+  justify-content: flex-end; padding-right: 0.75rem; color: #fff;
+  background: linear-gradient(90deg, rgba(214,40,57,0.30), rgba(214,40,57,0.48));
+  clip-path: inset(0 0 0 var(--x, 50%));
+}
+.cmpr-line {
+  position: absolute; top: 0; bottom: 0; left: var(--x, 50%); width: 2px;
+  margin-left: -1px; background: #fff; pointer-events: none;
+  box-shadow: 0 0 8px rgba(0,0,0,0.6);
+}
+.cmpr-grip {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: #fff; color: var(--ink); font-size: 9px; font-weight: 700;
+  white-space: nowrap; box-shadow: 0 1px 6px rgba(0,0,0,0.55);
+}
+.cmpr .sp-mix {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  margin: 0; opacity: 0; cursor: ew-resize;
+}
+.sp-time { flex: none; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 5.6rem; text-align: right; }
+@media (max-width: 600px) {
   .sts-card { flex-wrap: wrap; }
-  .sts-tts {
-    width: 100%; flex-direction: row; justify-content: flex-start;
-    padding-left: 0; padding-top: 0.8rem;
-    border-left: none; border-top: 1px solid rgba(255,255,255,0.1);
-  }
 }
 
 /* -- footer -- */
