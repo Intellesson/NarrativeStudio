@@ -183,6 +183,8 @@ img { max-width: 100%; }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
 .btn.primary:hover { background: #b91f2e; border-color: #b91f2e; }
 .btn.ghost { background: rgba(255,255,255,0.04); }
+/* "Coming soon" state: reads as the primary button, does nothing. */
+.btn.soon { opacity: 0.65; pointer-events: none; cursor: default; }
 .btn .sz { font-size: 0.78rem; font-weight: 400; color: rgba(255,255,255,0.72); }
 .btn.ghost .sz, .btn:not(.primary) .sz { color: var(--muted); }
 

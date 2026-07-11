@@ -14,6 +14,25 @@
   .wf-section.flip .wf-copy { order: 0; }
 }
 
+/* Alternating backdrop: the flip sections (every other one) carry a blurred,
+   dimmed studio photo so the page breathes instead of reading as flat panels.
+   ::before is the blurred image, overscanned by 60px and clipped by the
+   section's overflow so the soft blur edges never show; ::after is a crisp dark
+   tint that keeps the copy legible. Both sit behind the content (z-index < 0). */
+.wf-section.flip {
+  position: relative; z-index: 0; overflow: hidden;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.wf-section.flip::before {
+  content: ''; position: absolute; inset: -60px; z-index: -2; pointer-events: none;
+  background: url('assets/images/audiohook_bg2.jpg') center / cover no-repeat;
+  filter: blur(16px);
+}
+.wf-section.flip::after {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(rgba(15,15,18,0.82), rgba(17,17,20,0.88));
+}
+
 /* -- demo character colours (shared across scenes so the cast reads as one story) -- */
 .c-narr { --c: #8f93a2; }
 .c-mira { --c: #e0a63f; }

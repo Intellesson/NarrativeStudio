@@ -7,7 +7,7 @@
     { href: 'workflow.html', label: 'Workflow' },
     { href: 'speech-to-speech.html', label: 'Speech to Speech' }
   ];
-  var DOWNLOAD = { href: 'index.html#download', label: 'Download' };
+  var DOWNLOAD = { href: 'index.html#download', label: 'Coming soon' };
 
   // Current file name ('' -> index.html, e.g. served as the site root).
   var here = location.pathname.split('/').pop() || 'index.html';
