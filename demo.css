@@ -1,5 +1,5 @@
 /* Workflow page: animated mini-app demos. Each .demo-window is a tiny faked
-   Audiohook studio (palette + parts lifted from the real studio.css), driven
+   Narrative Studio studio (palette + parts lifted from the real studio.css), driven
    by demo.js adding/removing classes on a loop. */
 
 /* -- page layout: copy beside demo, alternating sides -- */
@@ -25,7 +25,7 @@
 }
 .wf-section.flip::before {
   content: ''; position: absolute; inset: -60px; z-index: -2; pointer-events: none;
-  background: url('assets/images/audiohook_bg2.jpg') center / cover no-repeat;
+  background: url('assets/images/narrativestudio_bg2.jpg') center / cover no-repeat;
   filter: blur(16px);
 }
 .wf-section.flip::after {
@@ -259,7 +259,93 @@
 .dw-take.fixed .dw-verdict.v-fixed { display: block; opacity: 1; }
 .dw-take .dw-btnbar { align-self: flex-start; }
 
-/* ============ scene 7: compile ============ */
+/* ============ scene 7: round trip ============ */
+/* The studio side reuses the ACX take strip - one long, dense take you would
+   hate to re-record. Pressing ✎ swaps the ENTIRE mini-app window for the
+   external editor (.dw-ext, dark violet, Audition-flavoured): an app switch,
+   not a popup. It repairs the blemish, saves, and hands the window back. */
+.demo-window[data-demo="roundtrip"] { position: relative; }
+.demo-window[data-demo="roundtrip"] .dw-body { height: 184px; }
+[data-demo="roundtrip"] .dw-take { padding: 0.55rem 0.6rem; }
+[data-demo="roundtrip"] .dw-tk-wave { height: 60px; }
+[data-demo="roundtrip"] .dw-tk-wave i { transition-delay: calc(var(--i, 0) * 12ms); }
+/* metering lights the offending peak, same feature the ACX scene established;
+   the narrator chooses the external fix over a re-record */
+[data-demo="roundtrip"] .dw-tk-wave i.hot { background: #e08f3f; }
+[data-demo="roundtrip"] .rt-take.flag .dw-tk-wave i.hot { animation: dw-hot 0.7s ease-in-out infinite; }
+/* after the round trip: the region settles to the same varied speech levels
+   the editor produced (--f matches the ext trace) and goes back to green */
+[data-demo="roundtrip"] .rt-take.fixed .dw-tk-wave i.hot { background: var(--accent-2); animation: none; transform: scaleY(var(--f, 0.65)); }
+
+/* file-watcher status line under the take */
+.rt-watch { margin-top: 0.45rem; font-size: 9.5px; color: var(--muted); min-height: 15px; }
+.rt-watch span { display: none; }
+.rt-watch.show .w1 { display: inline-block; animation: dw-pulse 1.4s infinite; }
+.rt-watch.sync .w1 { display: none; }
+.rt-watch.sync .w2 { display: inline; color: var(--accent-2); }
+
+/* the external editor: covers the whole mini-app window, chrome and all */
+.dw-ext {
+  position: absolute; inset: 0; z-index: 5;
+  display: flex; flex-direction: column;
+  background: #17131f;
+  opacity: 0; transform: scale(1.045);
+  transition: opacity .45s ease, transform .5s ease;
+}
+.dw-ext.open { opacity: 1; transform: none; }
+.dw-ext.away { opacity: 0; transform: scale(0.97); transition: opacity .35s ease, transform .35s ease; }
+.dw-ext-bar {
+  flex: none; display: flex; align-items: center; gap: 6px; padding: 6px 10px;
+  background: #211b31; border-bottom: 1px solid #3a2f5c; font-size: 9.5px; color: #b6a9e8;
+}
+.dw-ext-logo {
+  flex: none; width: 16px; height: 16px; border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8.5px; font-weight: 700; color: #cfc2ff; background: #2b2344; border: 1px solid #5a4a8f;
+}
+.dw-ext-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dw-ext-saved { margin-left: auto; flex: none; color: var(--accent-2); opacity: 0; transition: opacity .3s ease; }
+.dw-ext-saved.show { opacity: 1; }
+.dw-ext-menu {
+  flex: none; display: flex; gap: 0.75rem; padding: 4px 11px;
+  font-size: 9px; color: #8d7fc0; background: #1b1628; border-bottom: 1px solid #322952;
+}
+.dw-ext-body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 0.5rem; padding: 0.7rem 0.8rem 0.75rem; }
+.dw-ext-ruler {
+  flex: none; height: 11px; border-bottom: 1px solid #3a2f5c; opacity: 0.8;
+  background: repeating-linear-gradient(90deg, #3a2f5c 0 1px, transparent 1px 40px);
+}
+.dw-ext-wave {
+  flex: 1; min-height: 0; display: flex;
+  background: #120e1c; border: 1px solid #322952; border-radius: 6px; padding: 9px 10px;
+}
+.dw-ext-trace { position: relative; flex: 1; display: flex; align-items: center; gap: 2px; }
+/* editors draw the zero line over the waveform - keep it faint */
+.dw-ext-trace::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(146, 124, 255, 0.25); }
+.dw-ext-trace i {
+  flex: 1; height: var(--h, 40%); border-radius: 1px; background: #927cff;
+  transform: scaleY(0); transform-origin: center;
+  transition: transform .4s ease calc(var(--i, 0) * 12ms), background .35s ease;
+}
+.dw-ext.wavein .dw-ext-trace i { transform: scaleY(1); }
+/* marquee selection around the blemish */
+.dw-ext-selbox {
+  position: absolute; top: -6px; bottom: -6px; left: 42.5%; width: 32.5%;
+  border: 1px solid rgba(190, 170, 255, 0.85); border-radius: 3px;
+  background: rgba(146, 124, 255, 0.16);
+  opacity: 0; transition: opacity .3s ease;
+}
+.dw-ext-selbox.in { opacity: 1; }
+/* the repair: the spike collapses and its neighbours settle into a smooth fade */
+.dw-ext.trim .dw-ext-trace i { transition-delay: 0ms; }
+.dw-ext.trim .dw-ext-trace i.sel { transform: scaleY(var(--f, 0.4)); }
+.dw-ext-tools { flex: none; display: flex; align-items: center; gap: 0.45rem; }
+.dw-ext .dw-btnbar { background: #292144; border-color: #4a3d73; }
+.dw-ext .dw-btnbar.press { animation: dw-press-ext 0.4s ease; }
+@keyframes dw-press-ext { 30% { transform: scale(0.92); background: #7a63e0; border-color: #7a63e0; color: #fff; } }
+.dw-ext-hint { margin-left: auto; font-size: 8.5px; color: #7c6fa8; font-style: italic; }
+
+/* ============ scene 8: compile ============ */
 .dw-ruler {
   height: 13px; margin-bottom: 2px; border-bottom: 1px solid var(--line);
   background: repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 44px);

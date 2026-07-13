@@ -1,4 +1,4 @@
-/* Audiohook - download site. Palette, wordmark and surfaces lifted from the app
+/* Narrative Studio - download site. Palette, wordmark and surfaces lifted from the app
    (studio/studio.css) so the site and program read as one product. */
 
 @font-face {
@@ -79,6 +79,7 @@ img { max-width: 100%; }
   font-weight: 700; letter-spacing: 0.18em; font-size: 21px; text-decoration: none;
 }
 .logo .brand-mark { height: 1.7em; width: auto; display: block; }
+.bar .logo > span { position: relative; top: 0.08em; }
 .logo .lg-audio { color: var(--text); }
 .logo .lg-hook { color: var(--accent); }
 .bar-nav { display: flex; align-items: center; gap: 1.4rem; }
@@ -248,7 +249,7 @@ img { max-width: 100%; }
   content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background:
     linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-    url('assets/images/audiohook_bg1.jpg') center / cover no-repeat;
+    url('assets/images/narrativestudio_bg1.jpg') center / cover no-repeat;
 }
 /* -- liquid glass: the shared frosted surface for every card across the site.
    Kept GPU-cheap: ONE static backdrop-filter per pane (never transitioned),
@@ -434,6 +435,19 @@ pre.code { display: block; padding: 0.85rem 1rem; overflow-x: auto; white-space:
 .listen-card.lp-missing .listen-dl { opacity: 0.4; pointer-events: none; }
 .listen-card.lp-missing .lp-time { color: #d99b3f; min-width: 0; }
 
+/* -- round-trip: external-editor support under the comparison table -- */
+.roundtrip { margin-top: 2.6rem; }
+.roundtrip .section-head { margin-bottom: 1.2rem; }
+.editor-list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+}
+.editor-chip {
+  font-size: 0.9rem; color: var(--text);
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 999px; padding: 0.4rem 0.9rem;
+}
+
 /* -- workflow comparison table (below the players) -- */
 .vs-panel {
   margin-top: 2rem; overflow-x: auto;
@@ -478,23 +492,35 @@ pre.code { display: block; padding: 0.85rem 1rem; overflow-x: auto; white-space:
   box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.14);
 }
 @supports not (backdrop-filter: blur(1px)) { .sts-card { background: rgba(32,32,38,0.88); } }
-/* avatar placeholder: dashed ring + initial, swapped for an <img> later */
+/* character avatar: rounded square filling the card's height (the card's own
+   padding provides the breathing room around it) */
 .sts-avatar {
-  flex: none; width: 64px; height: 64px; border-radius: 50%;
+  flex: none; align-self: stretch; width: 128px; min-height: 128px;
+  border-radius: 14px; overflow: hidden;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Josefin Sans', system-ui, sans-serif; font-weight: 700; font-size: 1.5rem;
-  color: var(--muted); background: rgba(255,255,255,0.06);
-  border: 2px dashed rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
 }
-.sts-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.sts-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
 .sts-body { flex: 1; min-width: 0; }
 .sts-name { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.55rem; }
 .sts-from { font-weight: 400; font-size: 0.85rem; font-style: italic; color: var(--muted); margin-left: 0.45rem; }
 .sts-from::before { content: '- '; font-style: normal; }
+/* the STS voice-model name, pinned to the card's top-right corner - long
+   names truncate, the full name lives in the tooltip */
+.sts-voice {
+  position: absolute; top: 1.1rem; right: 1.4rem; max-width: 42%;
+  font-size: 0.78rem; color: var(--muted); text-align: right;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
 /* the comparison proper: two equal halves, human performance vs flat TTS */
 .sts-duel { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: stretch; }
 @media (max-width: 860px) { .sts-duel { grid-template-columns: 1fr; } }
 .sts-half {
+  min-width: 0;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.09);
   border-radius: 12px; padding: 0.65rem 0.85rem;
@@ -504,7 +530,12 @@ pre.code { display: block; padding: 0.85rem 1rem; overflow-x: auto; white-space:
   font-size: 9.5px; font-weight: 600; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--muted);
 }
-.sts-morph, .sts-ttsrow { display: flex; align-items: center; gap: 0.6rem; }
+/* Rows wrap at ANY width: the tool (compare bar / tts track) sits last and
+   greedily fills the remaining line; below ~200px of leftover space it wraps
+   onto its own full-width row instead of being squeezed or clipped. */
+.sts-morph, .sts-ttsrow { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem 0.6rem; }
+.cmpr, .tp-track { flex: 1 1 200px; order: 5; }
+.sp-time, .tp-time { margin-left: auto; }
 .tp-track {
   flex: 1; min-width: 60px; height: 7px; border-radius: 999px;
   background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
@@ -565,8 +596,17 @@ pre.code { display: block; padding: 0.85rem 1rem; overflow-x: auto; white-space:
   margin: 0; opacity: 0; cursor: ew-resize;
 }
 .sp-time { flex: none; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 5.6rem; text-align: right; }
-@media (max-width: 600px) {
-  .sts-card { flex-wrap: wrap; }
+/* -- STS cards on small screens: controls wrap instead of clipping -- */
+@media (max-width: 700px) {
+  .sts-card { gap: 0.9rem; }
+  .sts-avatar { width: 96px; }
+  .sts-voice {
+    position: static; max-width: none; text-align: left;
+    margin: -0.35rem 0 0.55rem; white-space: normal;
+  }
+  .sp-play, .sp-stop, .tp-play, .tp-stop { width: 34px; height: 34px; font-size: 10px; }
+  .sp-time, .tp-time { min-width: 0; font-size: 10.5px; }
+  .sts-half { padding: 0.55rem 0.65rem; }
 }
 .sts-disclaimer {
   margin: 1.4rem 0 0.8rem; font-size: 0.85rem; color: var(--text);

@@ -21,7 +21,7 @@
     '<header class="bar">\n' +
     '    <a class="logo" href="index.html">\n' +
     '      <img class="brand-mark" src="assets/logo/AHlogo.svg" alt="">\n' +
-    '      <span><span class="lg-audio">AUDIO</span><span class="lg-hook">HOOK</span></span>\n' +
+    '      <span><span class="lg-audio">NARRATIVE</span><span class="lg-hook">STUDIO</span></span>\n' +
     '    </a>\n' +
     '    <nav class="bar-nav">\n      ' + nav + '\n' +
     '      <a class="bar-download" href="' + DOWNLOAD.href + '">' + DOWNLOAD.label + '</a>\n' +

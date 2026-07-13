@@ -65,6 +65,22 @@
       [1200, [['.t3', 'retake'], ['.t3', 'fixed'], ['.t3', 'draw']]],
       [3400, []]
     ],
+    roundtrip: [
+      [500,  [['.rt-take', 'draw']]],
+      [1200, [['.rt-v', 'show'], ['.rt-take', 'flag']]],
+      [1200, [['.b-ext', 'press']]],
+      [500,  [['.rt-watch', 'show']]],
+      [700,  [['.dw-ext', 'open']]],
+      [500,  [['.dw-ext', 'wavein']]],
+      [1500, [['.dw-ext-selbox', 'in']]],
+      [900,  [['.b-zap', 'press']]],
+      [420,  [['.dw-ext', 'trim'], ['.dw-ext-selbox', 'in', 'rm']]],
+      [1000, [['.b-save', 'press']]],
+      [420,  [['.dw-ext-saved', 'show']]],
+      [1000, [['.dw-ext', 'away']]],
+      [500,  [['.rt-take', 'fixed'], ['.rt-take', 'flag', 'rm'], ['.rt-watch', 'sync']]],
+      [3600, []]
+    ],
     compile: [
       [400,  [['.k1', 'in']]],
       [220,  [['.k2', 'in']]],
